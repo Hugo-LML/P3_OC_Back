@@ -36,8 +36,11 @@ public class RentalController {
   @GetMapping("/{id}")
   public ResponseEntity<RentalResponse> getRental(@PathVariable final Integer id) {
     Optional<Rental> rental = rentalService.getRental(id);
+    // Appelle une class mapper (conversion entity -> dto)
+    // Ou je set toutes les propriétés ici -> listing de set()
     if (rental.isPresent()) {
-      return ResponseEntity.ok(new RentalResponse(rental.get()));
+      // return ResponseEntity.ok(new RentalResponse(rental.get()));
+      return null;
     } else {
       return null;
     }

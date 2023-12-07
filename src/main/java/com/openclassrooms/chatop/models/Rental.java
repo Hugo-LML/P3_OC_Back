@@ -30,7 +30,7 @@ public class Rental {
 
   private String description;
 
-  private Integer ownerId;
+  private Integer owner_id;
 
   private Date createdAt;
 

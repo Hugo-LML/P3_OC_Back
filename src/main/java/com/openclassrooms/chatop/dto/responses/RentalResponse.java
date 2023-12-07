@@ -1,8 +1,8 @@
 package com.openclassrooms.chatop.dto.responses;
 
-// import java.util.Date;
+import java.util.Date;
 
-import com.openclassrooms.chatop.models.Rental;
+// import com.openclassrooms.chatop.models.Rental;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,25 +15,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RentalResponse {
 
-  private Rental rental;
+  // private Rental rental;
 
-  // private Integer id;
+  private Integer id;
 
-  // private String name;
+  private String name;
 
-  // private Integer surface;
+  private Integer surface;
 
-  // private Integer price;
+  private Integer price;
 
-  // private String picture;
+  private String picture;
 
-  // private String description;
+  private String description;
 
-  // private Integer ownerId;
+  private Integer owner_id;
 
-  // private Date createdAt;
+  private Date createdAt;
 
-  // private Date updatedAt;
+  private Date updatedAt;
 
 
 }

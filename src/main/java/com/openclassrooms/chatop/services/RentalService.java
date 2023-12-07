@@ -37,7 +37,7 @@ public class RentalService {
         rentalCreated.setPrice(rentalRequest.getPrice());
         rentalCreated.setPicture(rentalRequest.getPicture());
         rentalCreated.setDescription(rentalRequest.getDescription());
-        rentalCreated.setOwnerId(currentUser.getId());
+        rentalCreated.setOwner_id(currentUser.getId());
 
         return rentalRepository.save(rentalCreated);
     });
