@@ -19,13 +19,16 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JWTService {
   
+  // Secret key used for JWT signing and validation
   @Value("${application.security.jwt.secret-key}")
   private String SECRET_KEY;
 
+  // Method to create a JWT token for a given UserDetails
   public String createToken(UserDetails userDetails) {
     return generateToken(new HashMap<>(), userDetails);
   }
 
+  // Method to generate a JWT token with specified claims and UserDetails
   public String generateToken(
     Map<String, Object> extractClaims,
     UserDetails userDetails
@@ -40,28 +43,34 @@ public class JWTService {
       .compact();
   }
 
+  // Method to check if a given token is valid for a given UserDetails
   public boolean isTokenValid(String token, UserDetails userDetails) {
     final String username = extractUsername(token);
     return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
   }
 
- private boolean isTokenExpired(String token) {
+  // Private method to check if a token is expired
+  private boolean isTokenExpired(String token) {
     return extractExpiration(token).before(new Date());
   }
 
- private Date extractExpiration(String token) {
-  return extractClaim(token, Claims::getExpiration);
-}
+  // Private method to extract the expiration date from a token
+  private Date extractExpiration(String token) {
+    return extractClaim(token, Claims::getExpiration);
+  }
 
+  // Method to extract the username from a token
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
   }
 
+  // Method to extract a specific claim from a token
   public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = extractAllClaims(token);
     return claimsResolver.apply(claims);
   }
 
+  // Private method to extract all claims from a token
   private Claims extractAllClaims(String token) {
     return Jwts
       .parserBuilder()
@@ -71,6 +80,7 @@ public class JWTService {
       .getBody();
   }
 
+  // Private method to get the signing key for JWT (converted from BASE64 secret key)
   private Key getSignInKey() {
     byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
     return Keys.hmacShaKeyFor(keyBytes);

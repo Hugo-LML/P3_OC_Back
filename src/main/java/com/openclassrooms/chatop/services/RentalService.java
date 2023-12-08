@@ -21,6 +21,9 @@ public class RentalService {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private UploadService uploadService;
+
   public Iterable<Rental> getAllRentals() {
     return rentalRepository.findAll();
   }
@@ -31,15 +34,23 @@ public class RentalService {
 
   public Optional<Rental> createRental(RentalRequest rentalRequest) throws IOException {
     return userService.getCurrentUser().map(currentUser -> {
-        Rental rentalCreated = new Rental();
-        rentalCreated.setName(rentalRequest.getName());
-        rentalCreated.setSurface(rentalRequest.getSurface());
-        rentalCreated.setPrice(rentalRequest.getPrice());
-        rentalCreated.setPicture(rentalRequest.getPicture());
-        rentalCreated.setDescription(rentalRequest.getDescription());
-        rentalCreated.setOwner_id(currentUser.getId());
-
-        return rentalRepository.save(rentalCreated);
+        String fileName;
+        try {
+          fileName = uploadService.storeFile(rentalRequest.getPicture());
+          System.out.println(fileName);
+          Rental rentalCreated = new Rental();
+          rentalCreated.setName(rentalRequest.getName());
+          rentalCreated.setSurface(rentalRequest.getSurface());
+          rentalCreated.setPrice(rentalRequest.getPrice());
+          rentalCreated.setPicture(fileName);
+          rentalCreated.setDescription(rentalRequest.getDescription());
+          rentalCreated.setOwner_id(currentUser.getId());
+  
+          return rentalRepository.save(rentalCreated);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        return null;
     });
   }
 

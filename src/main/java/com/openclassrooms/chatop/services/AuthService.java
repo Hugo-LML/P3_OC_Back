@@ -23,6 +23,9 @@ public class AuthService {
   private final AuthenticationManager authenticationManager;
 
   public AuthResponse register(RegisterRequest request) {
+    if (request.getName() == null || request.getEmail() == null || request.getPassword() == null) {
+      return null;
+    }
     var user = User.builder()
       .name(request.getName())
       .email(request.getEmail())

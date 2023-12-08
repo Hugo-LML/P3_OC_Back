@@ -20,24 +20,24 @@ public class Message {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  private Integer rentalId;
+  private Integer rental_id;
 
-  private Integer userId;
+  private Integer user_id;
 
   private String message;
 
-  private Date createdAt;
+  private Date created_at;
 
-  private Date updatedAt;
+  private Date updated_at;
 
   @PrePersist
   protected void onCreate() {
-    createdAt = new Date();
+    created_at = new Date();
   }
 
   @PreUpdate
   protected void onUpdate() {
-    updatedAt = new Date();
+    updated_at = new Date();
   }
 
 }

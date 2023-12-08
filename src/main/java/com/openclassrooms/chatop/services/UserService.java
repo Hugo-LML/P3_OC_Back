@@ -31,8 +31,8 @@ public class UserService {
     userResponse.setId(user.get().getId());
     userResponse.setName(user.get().getName());
     userResponse.setEmail(user.get().getEmail());
-    userResponse.setCreatedAt(user.get().getCreatedAt());
-    userResponse.setUpdatedAt(user.get().getUpdatedAt());
+    userResponse.setCreated_at(user.get().getCreated_at());
+    userResponse.setUpdated_at(user.get().getUpdated_at());
     return userResponse;
   }
 
@@ -42,8 +42,8 @@ public class UserService {
     userResponse.setId(user.get().getId());
     userResponse.setName(user.get().getName());
     userResponse.setEmail(user.get().getEmail());
-    userResponse.setCreatedAt(user.get().getCreatedAt());
-    userResponse.setUpdatedAt(user.get().getUpdatedAt());
+    userResponse.setCreated_at(user.get().getCreated_at());
+    userResponse.setUpdated_at(user.get().getUpdated_at());
     return userResponse;
   }
 

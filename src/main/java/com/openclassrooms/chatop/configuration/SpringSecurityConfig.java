@@ -26,10 +26,13 @@ public class SpringSecurityConfig {
       .csrf(csrf -> csrf.disable())
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(req -> req
-        .requestMatchers("/api/auth/**", "/v2/api-docs", "/swagger-ui", "/swagger-ui.html", "/swagger-resources/**").permitAll()
+        // List of urls accessibles without authentication
+        .requestMatchers("/", "/api/auth/**", "/v2/api-docs", "/swagger-ui", "/swagger-ui.html", "/swagger-resources/**").permitAll()
+        // Any other requests need authentication
         .anyRequest().authenticated()
       )
       .authenticationProvider(authenticationProvider)
+      // Add the custom JWT authentication filter before the standard UsernamePasswordAuthenticationFilter
       .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
       .build();
   }
