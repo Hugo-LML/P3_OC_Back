@@ -28,59 +28,64 @@ public class RentalService {
     return rentalRepository.findAll();
   }
 
-  public Optional<Rental> getRental(final Integer id) {
-    return rentalRepository.findById(id);
+  public Rental getRental(final Integer id) {
+    return rentalRepository.findById(id).orElse(null);
   }
 
   public Optional<Rental> createRental(RentalRequest rentalRequest) throws IOException {
     return userService.getCurrentUser().map(currentUser -> {
-        String fileName;
-        try {
-          fileName = uploadService.storeFile(rentalRequest.getPicture());
-          System.out.println(fileName);
-          Rental rentalCreated = new Rental();
-          rentalCreated.setName(rentalRequest.getName());
-          rentalCreated.setSurface(rentalRequest.getSurface());
-          rentalCreated.setPrice(rentalRequest.getPrice());
-          rentalCreated.setPicture(fileName);
-          rentalCreated.setDescription(rentalRequest.getDescription());
-          rentalCreated.setOwner_id(currentUser.getId());
-  
-          return rentalRepository.save(rentalCreated);
-        } catch (IOException e) {
-          e.printStackTrace();
+      try {
+        String fileName = uploadService.storeFile(rentalRequest.getPicture());
+        if (
+          rentalRequest.getName() == null || rentalRequest.getName().isEmpty()
+          || rentalRequest.getSurface() <= 0 || rentalRequest.getSurface() == null
+          || rentalRequest.getPrice() <= 0 || rentalRequest.getPrice() == null
+          || rentalRequest.getDescription() == null || rentalRequest.getDescription().isEmpty()
+          || fileName == null
+        ) {
+          return null;
         }
+        Rental rentalCreated = new Rental();
+        rentalCreated.setName(rentalRequest.getName());
+        rentalCreated.setSurface(rentalRequest.getSurface());
+        rentalCreated.setPrice(rentalRequest.getPrice());
+        rentalCreated.setPicture(fileName);
+        rentalCreated.setDescription(rentalRequest.getDescription());
+        rentalCreated.setOwner_id(currentUser.getId());
+  
+        return rentalRepository.save(rentalCreated);
+      } catch (Exception e) {
         return null;
+      }
     });
   }
 
   public Optional<Rental> updateRental(Integer id, RentalUpdateRequest rentalUpdateRequest) throws IOException {
-    Optional<Rental> rental = getRental(id);
-    if (rental.isPresent()) {
-      Rental currentRental = rental.get();
+    Rental rental = getRental(id);
+    if (rental != null) {
 
       String name = rentalUpdateRequest.getName();
-      if (name != null) {
-        currentRental.setName(name);
+      if (name != null && !name.isEmpty()) {
+        rental.setName(name);
       }
 
       Integer surface = rentalUpdateRequest.getSurface();
-      if (surface != null) {
-        currentRental.setSurface(surface);
+      if (surface != null && surface >= 0) {
+        rental.setSurface(surface);
       }
 
       Integer price = rentalUpdateRequest.getPrice();
-      if (price != null) {
-        currentRental.setPrice(price);
+      if (price != null && surface >= 0) {
+        rental.setPrice(price);
       }
 
       String description = rentalUpdateRequest.getDescription();
-      if (description != null) {
-        currentRental.setDescription(description);
+      if (description != null && !description.isEmpty()) {
+        rental.setDescription(description);
       }
 
-      rentalRepository.save(currentRental);
-      return Optional.of(currentRental);
+      rentalRepository.save(rental);
+      return Optional.of(rental);
     } else {
       return null;
     }

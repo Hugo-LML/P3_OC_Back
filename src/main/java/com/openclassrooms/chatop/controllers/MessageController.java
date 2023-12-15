@@ -29,16 +29,16 @@ public class MessageController {
   @PostMapping("")
   @ApiOperation(value = "Creation of a new message")
   @ApiResponses(value = {
-    @ApiResponse(code = 200, message = "Message send with success", response = MessageResponse.class),
+    @ApiResponse(code = 201, message = "Message send with success", response = MessageResponse.class),
     @ApiResponse(code = 400, message = "Incorrect rental_id, user_id, or message", response = String.class),
     @ApiResponse(code = 401, message = "Incorrect token", response = String.class)
   })
-  public ResponseEntity<MessageResponse> createMessage(@RequestBody MessageRequest messageRequest) throws IOException {
+  public ResponseEntity<Object> createMessage(@RequestBody MessageRequest messageRequest) throws IOException {
     Optional<Message> messageCreated = messageService.createMessage(messageRequest);
     if (messageCreated.isPresent()) {
       return ResponseEntity.ok(new MessageResponse("Message send with success"));
     } else {
-      return null;
+      return ResponseEntity.badRequest().body("Incorrect rental_id, user_id, message, or token");
     }
   }
 

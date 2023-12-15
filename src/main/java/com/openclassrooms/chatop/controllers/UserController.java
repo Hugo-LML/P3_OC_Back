@@ -25,11 +25,15 @@ public class UserController {
   @ApiOperation(value = "Get user by id")
   @ApiResponses(value = {
     @ApiResponse(code = 200, message = "User retrieved successfully", response = UserResponse.class),
+    @ApiResponse(code = 400, message = "Incorrect user id", response = String.class),
     @ApiResponse(code = 401, message = "Incorrect token", response = String.class)
   })
-  public ResponseEntity<UserResponse> getUser(@PathVariable final Integer id) {
+  public ResponseEntity<Object> getUser(@PathVariable final Integer id) {
     UserResponse user = userService.getUser(id);
-    return ResponseEntity.ok(user);
+    if (user != null) {
+      return ResponseEntity.ok(user);
+    }
+    return ResponseEntity.badRequest().body("Incorrect user id or token");
   }
 
 }

@@ -2,6 +2,12 @@ package com.openclassrooms.chatop.filters;
 
 import java.io.IOException;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,10 +19,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.openclassrooms.chatop.services.JWTService;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -29,9 +31,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
   // This method is called for each incoming HTTP request and is responsible for handling JWT-based authentication
   @Override
   protected void doFilterInternal(
-    @NonNull HttpServletRequest request,
-    @NonNull HttpServletResponse response,
-    @NonNull FilterChain filterChain
+    @NotNull HttpServletRequest request,
+    @NotNull HttpServletResponse response,
+    @NotNull FilterChain filterChain
   ) throws ServletException, IOException {
     
     final String authHeader = request.getHeader("Authorization");

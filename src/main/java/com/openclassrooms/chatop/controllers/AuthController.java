@@ -1,6 +1,7 @@
 package com.openclassrooms.chatop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,11 +37,11 @@ public class AuthController {
     @ApiResponse(code = 400, message = "Incorrect name, email, or password", response = String.class)
   })
   public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
-    AuthResponse authResponse = authService.register(request);
-    if (authResponse != null) {
-      return ResponseEntity.ok(authService.register(request));
+    AuthResponse registerResponse = authService.register(request);
+    if (registerResponse != null) {
+      return ResponseEntity.ok(registerResponse);
     }
-    return ResponseEntity.badRequest().body("Something went wrong !");
+    return ResponseEntity.badRequest().body("Incorrect name, email, or password");
   }
 
   @PostMapping("/login")
@@ -49,8 +50,12 @@ public class AuthController {
     @ApiResponse(code = 200, message = "Login successfully", response = AuthResponse.class),
     @ApiResponse(code = 401, message = "Incorrect name, email, or password", response = String.class)
   })
-  public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-    return ResponseEntity.ok(authService.login(request));
+  public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
+    AuthResponse loginResponse = authService.login(request);
+    if (loginResponse != null) {
+      return ResponseEntity.ok(loginResponse);
+    }
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect name, email, or password");
   }
 
   @GetMapping("/me")
@@ -59,8 +64,12 @@ public class AuthController {
     @ApiResponse(code = 200, message = "Identified successfully", response = UserResponse.class),
     @ApiResponse(code = 401, message = "Incorrect token", response = String.class)
   })
-  public ResponseEntity<UserResponse> getMe() {
-    return ResponseEntity.ok(userService.getMe());
+  public ResponseEntity<Object> getMe() {
+    UserResponse getMeResponse = userService.getMe();
+    if (getMeResponse != null) {
+      return ResponseEntity.ok(getMeResponse);
+    }
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect token");
   }
 
 }

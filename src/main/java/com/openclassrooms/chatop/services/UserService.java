@@ -26,25 +26,31 @@ public class UserService {
   }
 
   public UserResponse getUser(final Integer id) {
-    Optional<User> user = userRepository.findById(id);
-    UserResponse userResponse = new UserResponse();
-    userResponse.setId(user.get().getId());
-    userResponse.setName(user.get().getName());
-    userResponse.setEmail(user.get().getEmail());
-    userResponse.setCreated_at(user.get().getCreated_at());
-    userResponse.setUpdated_at(user.get().getUpdated_at());
-    return userResponse;
+    User user = userRepository.findById(id).orElse(null);
+    if (user != null) {
+      UserResponse userResponse = new UserResponse();
+      userResponse.setId(user.getId());
+      userResponse.setName(user.getName());
+      userResponse.setEmail(user.getEmail());
+      userResponse.setCreated_at(user.getCreated_at());
+      userResponse.setUpdated_at(user.getUpdated_at());
+      return userResponse;
+    }
+    return null;
   }
 
   public UserResponse getMe() {
     Optional<User> user = getCurrentUser();
-    UserResponse userResponse = new UserResponse();
-    userResponse.setId(user.get().getId());
-    userResponse.setName(user.get().getName());
-    userResponse.setEmail(user.get().getEmail());
-    userResponse.setCreated_at(user.get().getCreated_at());
-    userResponse.setUpdated_at(user.get().getUpdated_at());
-    return userResponse;
+    if (user != null) {
+      UserResponse userResponse = new UserResponse();
+      userResponse.setId(user.get().getId());
+      userResponse.setName(user.get().getName());
+      userResponse.setEmail(user.get().getEmail());
+      userResponse.setCreated_at(user.get().getCreated_at());
+      userResponse.setUpdated_at(user.get().getUpdated_at());
+      return userResponse;
+    };
+    return null;
   }
 
 }

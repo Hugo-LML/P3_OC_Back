@@ -27,10 +27,11 @@ public class SpringSecurityConfig {
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(req -> req
         // List of urls accessibles without authentication
-        .requestMatchers("/", "/api/auth/**", "/v2/api-docs", "/swagger-ui", "/swagger-ui.html", "/swagger-resources/**").permitAll()
+        .antMatchers("/", "/api/auth/**", "/images/**", "/v2/api-docs", "/swagger-ui/*", "/swagger-ui.html", "/swagger-resources/**").permitAll()
         // Any other requests need authentication
         .anyRequest().authenticated()
       )
+      // Set the userDetailsService and encrypt the password with BCrypt
       .authenticationProvider(authenticationProvider)
       // Add the custom JWT authentication filter before the standard UsernamePasswordAuthenticationFilter
       .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

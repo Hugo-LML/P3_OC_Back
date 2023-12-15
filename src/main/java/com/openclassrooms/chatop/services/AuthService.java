@@ -41,14 +41,16 @@ public class AuthService {
   }
 
   public AuthResponse login(LoginRequest request) {
-    authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(
-        request.getEmail(),
-        request.getPassword())
-    );
-    var user = repository.findByEmail(request.getEmail())
-      .orElseThrow();
-    
+    try {
+      authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+          request.getEmail(),
+          request.getPassword())
+      );
+    } catch (Exception e) {
+      return null;
+    }
+    var user = repository.findByEmail(request.getEmail()).orElseThrow();
     var jwtToken = jwtService.createToken(user);
     return AuthResponse.builder()
       .token(jwtToken)
