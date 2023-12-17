@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "Response DTO of retrieved user")
 public class UserResponse {
   
-  @ApiModelProperty(value = "Id of the retrieved user")
+  @ApiModelProperty(value = "Id of the retrieved user", example = "1")
   private Integer id;
 
   @ApiModelProperty(value = "Name of the retrieved user")

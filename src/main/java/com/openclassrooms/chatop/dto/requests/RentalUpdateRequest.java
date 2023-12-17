@@ -12,10 +12,10 @@ public class RentalUpdateRequest {
   @ApiModelProperty(value = "Name of the updated rental")
   private String name;
   
-  @ApiModelProperty(value = "Surface of the updated rental")
+  @ApiModelProperty(value = "Surface of the updated rental", example = "1")
   private Integer surface;
   
-  @ApiModelProperty(value = "Price of the updated rental")
+  @ApiModelProperty(value = "Price of the updated rental", example = "1")
   private Integer price;
   
   @ApiModelProperty(value = "Description of the updated rental")

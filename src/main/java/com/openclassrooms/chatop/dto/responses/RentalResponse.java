@@ -16,16 +16,16 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "Response DTO of retrieved rental")
 public class RentalResponse {
 
-  @ApiModelProperty(value = "Id of the retrieved rental")
+  @ApiModelProperty(value = "Id of the retrieved rental", example = "1")
   private Integer id;
 
   @ApiModelProperty(value = "Name of the retrieved rental")
   private String name;
 
-  @ApiModelProperty(value = "Surface of the retrieved rental")
+  @ApiModelProperty(value = "Surface of the retrieved rental", example = "1")
   private Integer surface;
 
-  @ApiModelProperty(value = "Price of the retrieved rental")
+  @ApiModelProperty(value = "Price of the retrieved rental", example = "1")
   private Integer price;
 
   @ApiModelProperty(value = "Picture of the retrieved rental")
@@ -34,7 +34,7 @@ public class RentalResponse {
   @ApiModelProperty(value = "Description of the retrieved rental")
   private String description;
 
-  @ApiModelProperty(value = "Owner id of the retrieved rental")
+  @ApiModelProperty(value = "Owner id of the retrieved rental", example = "1")
   private Integer owner_id;
 
   @ApiModelProperty(value = "Cration date of the retrieved rental")

@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.chatop.dto.responses.UserResponse;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.net.MalformedURLException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -21,6 +27,12 @@ public class UploadController {
   private String fileUploadDirectory;
 
   @GetMapping("/images/{fileName:.+}")
+  @ApiOperation(value = "Uplodad image")
+  @ApiResponses(value = {
+    @ApiResponse(code = 200, message = "Image uploaded successfully", response = UserResponse.class),
+    @ApiResponse(code = 400, message = "Image to big, or incorrect extension", response = String.class),
+    @ApiResponse(code = 401, message = "Incorrect token", response = String.class)
+  })
   public ResponseEntity<Resource> getImage(@PathVariable String fileName) {
     try {
       String decodedFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8);

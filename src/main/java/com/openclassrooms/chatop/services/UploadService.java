@@ -1,8 +1,6 @@
 package com.openclassrooms.chatop.services;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
