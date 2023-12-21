@@ -19,17 +19,14 @@ ChâTop wants to develop an online portal to enable potential tenants to contact
 
 - Create an applications.properties file in the /resources folder
 - Your file should be structured as follow :
-spring.datasource.url=yourURL
-spring.datasource.username=yourUsername
-spring.datasource.password=yourPassword
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-spring.mvc.pathmatch.matching-strategy=ant-path-matcher
-
-application.security.jwt.secret-key=yourSecretKey
-
-file.upload.directory=The/Place/Where/The/Folder/Is/Stored/P3_OC_Back/src/main/java/com/openclassrooms/chatop/uploads/
-
-server.location.images=http://localhost:8080/images/
+  - spring.datasource.url=yourURL
+  - spring.datasource.username=yourUsername
+  - spring.datasource.password=yourPassword
+  - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+  - spring.mvc.pathmatch.matching-strategy=ant-path-matcher
+  - application.security.jwt.secret-key=yourSecretKey
+  - file.upload.directory=The/Place/Where/The/Folder/Is/Stored/P3_OC_Back/src/main/java/com/openclassrooms/chatop/uploads/
+  - server.location.images=http://localhost:8080/images/
 
 ## Launch the project
 
